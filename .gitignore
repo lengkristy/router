@@ -1,0 +1,68 @@
+#======================================  
+# .gitignore  
+#   
+# 2015-01-09 created by cheungmine  
+#======================================  
+.git  
+  
+#--------------------------  
+# ignored files for vc++  
+# 2015-01-09  
+#--------------------------  
+UpgradeLog.XML  
+~*  
+*~  
+*.7z  
+*.a  
+*.aps  
+*.clw  
+*.dll  
+*.dsp  
+*.dsw  
+*.exe  
+*.exp  
+*.lastbuildstate  
+*.lib  
+*.log  
+*.tlog  
+*.idb  
+*.ilk  
+*.ncb  
+*.obj  
+*.opensdf  
+*.pdb  
+*.pyc  
+*.rar  
+*.res  
+*.sdf  
+*.so  
+*.suo  
+*.user  
+*.zip  
+  
+#--------------------------  
+# ignored dirs for vc++  
+#--------------------------  
+Debug.win32/  
+Release.win32/  
+*.tlog/  
+_UpgradeReport_Files/  
+ipch/  
+tmp/  
+temp/  
+~*/  
+target/  
+build/  
+Debug/
+Debug/log/
+Release/
+router/log/
+router/Debug/
+router/Release/
+
+#---------------------
+# ignore dirs for linux
+#---------------------
+linux_debug/
+linux_release/
+.vscode/
