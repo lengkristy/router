@@ -5,8 +5,103 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="core">
+      <UniqueIdentifier>{a6a4ce69-0a9d-4929-9a12-ba38088ae442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cfg">
+      <UniqueIdentifier>{4c3fc052-7f03-4e9c-bd7f-07b59d215acb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="module">
+      <UniqueIdentifier>{199b22b4-514c-4da9-9fb7-5adddadd95bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="msg">
+      <UniqueIdentifier>{4ea8f786-015f-47f2-9888-47b317cf6dd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="collection">
+      <UniqueIdentifier>{0c46f011-4f5d-4e9f-91b8-9e70f5fe007e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app">
+      <UniqueIdentifier>{8de420f3-f9e2-411e-a4c8-81244004890d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="router.c" />
+    <ClCompile Include="collection\array_list.c">
+      <Filter>collection</Filter>
+    </ClCompile>
+    <ClCompile Include="collection\link_list.c">
+      <Filter>collection</Filter>
+    </ClCompile>
+    <ClCompile Include="collection\map.c">
+      <Filter>collection</Filter>
+    </ClCompile>
+    <ClCompile Include="collection\queue.c">
+      <Filter>collection</Filter>
+    </ClCompile>
+    <ClCompile Include="module\moon_base.c">
+      <Filter>module</Filter>
+    </ClCompile>
+    <ClCompile Include="module\moon_string.c">
+      <Filter>module</Filter>
+    </ClCompile>
+    <ClCompile Include="module\moon_memory_pool.c">
+      <Filter>module</Filter>
+    </ClCompile>
+    <ClCompile Include="core\router_link.c">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="module\moon_http_client.c">
+      <Filter>module</Filter>
+    </ClCompile>
+    <ClCompile Include="app\router_main.c">
+      <Filter>app</Filter>
+    </ClCompile>
+    <ClCompile Include="core\server.c">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="module\module_log.c">
+      <Filter>module</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="core\router_link.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="collection\array_list.h">
+      <Filter>collection</Filter>
+    </ClInclude>
+    <ClInclude Include="collection\link_list.h">
+      <Filter>collection</Filter>
+    </ClInclude>
+    <ClInclude Include="collection\map.h">
+      <Filter>collection</Filter>
+    </ClInclude>
+    <ClInclude Include="collection\queue.h">
+      <Filter>collection</Filter>
+    </ClInclude>
+    <ClInclude Include="module\moon_base.h">
+      <Filter>module</Filter>
+    </ClInclude>
+    <ClInclude Include="module\moon_string.h">
+      <Filter>module</Filter>
+    </ClInclude>
+    <ClInclude Include="cfg\environment.h">
+      <Filter>cfg</Filter>
+    </ClInclude>
+    <ClInclude Include="module\moon_memory_pool.h">
+      <Filter>module</Filter>
+    </ClInclude>
+    <ClInclude Include="module\moon_http_client.h">
+      <Filter>module</Filter>
+    </ClInclude>
+    <ClInclude Include="app\router_main.h">
+      <Filter>app</Filter>
+    </ClInclude>
+    <ClInclude Include="core\server.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="module\module_log.h">
+      <Filter>module</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -60,7 +60,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="app\router_main.c" />
+    <ClCompile Include="collection\array_list.c" />
+    <ClCompile Include="collection\link_list.c" />
+    <ClCompile Include="collection\map.c" />
+    <ClCompile Include="collection\queue.c" />
+    <ClCompile Include="core\router_link.c" />
+    <ClCompile Include="core\server.c" />
+    <ClCompile Include="module\module_log.c" />
+    <ClCompile Include="module\moon_base.c" />
+    <ClCompile Include="module\moon_http_client.c" />
+    <ClCompile Include="module\moon_memory_pool.c" />
+    <ClCompile Include="module\moon_string.c" />
     <ClCompile Include="router.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="app\router_main.h" />
+    <ClInclude Include="cfg\environment.h" />
+    <ClInclude Include="collection\array_list.h" />
+    <ClInclude Include="collection\link_list.h" />
+    <ClInclude Include="collection\map.h" />
+    <ClInclude Include="collection\queue.h" />
+    <ClInclude Include="core\router_link.h" />
+    <ClInclude Include="core\server.h" />
+    <ClInclude Include="module\module_log.h" />
+    <ClInclude Include="module\moon_base.h" />
+    <ClInclude Include="module\moon_http_client.h" />
+    <ClInclude Include="module\moon_memory_pool.h" />
+    <ClInclude Include="module\moon_string.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
