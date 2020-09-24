@@ -90,6 +90,15 @@ extern "C" {
 
 	/**
 	 * 函数说明：
+	 *    删除元素
+	 * 参数：
+	 *    p_map：map指针
+	 *    p_key：key
+	 */
+	void map_remove(map *p_map,char *p_key);
+
+	/**
+	 * 函数说明：
 	 *   获取所有的key列表
 	 * 参数：
 	 *   p_map：map指针

@@ -30,17 +30,17 @@
 #ifdef MS_WINDOWS
 /*define windows platform configuration file path*/
 #define MOON_CONF_PATH ".\\config" /*define moon configuration dir*/
-#define MOON_SERVER_CONF_FILE ".\\config\\moon.cfg" /* server configuration file path*/
+#define MOON_SERVER_CONF_FILE ".\\config\\router.cfg" /* server configuration file path*/
 #define MOON_CONF_FILE_SIZE 1024*1024 /*define config file size*/
-#define MOON_LOG_FILE_NAME "moon.log" /*server log path*/
+#define MOON_LOG_FILE_NAME "router.log" /*server log path*/
 #endif
 
 #ifdef LINUX
 /*define linux platform configuration file path*/
 #define MOON_CONF_PATH "config" /*define moon configuration dir*/
-#define MOON_SERVER_CONF_FILE "config/moon.cfg" /* server configuration file path*/
+#define MOON_SERVER_CONF_FILE "config/router.cfg" /* server configuration file path*/
 #define MOON_CONF_FILE_SIZE 10240 /*define config file size*/
-#define MOON_LOG_FILE_NAME "log/moon.log" /*server log path*/
+#define MOON_LOG_FILE_NAME "log/router.log" /*server log path*/
 #endif
 
 /*define the param characteristic*/
@@ -58,6 +58,7 @@ typedef struct _router_server_config{
 	char register_addr[512];//注册中心地址
 	char server_ip[30];//服务启动ip
 	int server_port;//服务端口
+	int http_port;//http服务的端口
 	char router_node_name[60];//节点名称
 	int moon_node_max_count;//管理的通信服务节点最大数量
 	char log_level_debug;//是否开启debug日志

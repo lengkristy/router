@@ -62,6 +62,30 @@
     <ClCompile Include="module\module_log.c">
       <Filter>module</Filter>
     </ClCompile>
+    <ClCompile Include="module\module_cfg.c">
+      <Filter>module</Filter>
+    </ClCompile>
+    <ClCompile Include="module\moon_file.c">
+      <Filter>module</Filter>
+    </ClCompile>
+    <ClCompile Include="core\moon_session_manager.c">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\ms_nt__iocp.c">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\ms_socket_context.c">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="module\moon_time.c">
+      <Filter>module</Filter>
+    </ClCompile>
+    <ClCompile Include="module\command.c">
+      <Filter>module</Filter>
+    </ClCompile>
+    <ClCompile Include="module\moon_data_cache.c">
+      <Filter>module</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\router_link.h">
@@ -101,6 +125,39 @@
       <Filter>core</Filter>
     </ClInclude>
     <ClInclude Include="module\module_log.h">
+      <Filter>module</Filter>
+    </ClInclude>
+    <ClInclude Include="module\module_cfg.h">
+      <Filter>module</Filter>
+    </ClInclude>
+    <ClInclude Include="module\moon_file.h">
+      <Filter>module</Filter>
+    </ClInclude>
+    <ClInclude Include="core\moon_session.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\moon_session_manager.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\ms_nt__iocp.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\ms_socket_context.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="msg\moon_protocol.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="module\moon_time.h">
+      <Filter>module</Filter>
+    </ClInclude>
+    <ClInclude Include="module\command.h">
+      <Filter>module</Filter>
+    </ClInclude>
+    <ClInclude Include="core\data_exchange.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="module\moon_data_cache.h">
       <Filter>module</Filter>
     </ClInclude>
   </ItemGroup>

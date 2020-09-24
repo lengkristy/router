@@ -30,6 +30,8 @@ extern "C" {
 		moon_char node_ip[20];
 		/*节点开放端口*/
 		unsigned int node_port;
+		/*路由状态：0：停止；1：正常运行；2：满负载*/
+		unsigned char status;
 	}router_node;
 
 	/**

@@ -1,5 +1,7 @@
 #include "server.h"
 #include "../cfg/environment.h"
+#include "../module/module_log.h"
+#include "../module/command.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -17,7 +19,34 @@ extern "C" {
 	*/
 	void router_start()
 	{
+		//初始化日志
+		//init log
+		if(!moon_log_init())
+		{
+			moon_write_error_log("open log file faild,server has exit.");
+			return;
+		}
+		//加载配置
+		moon_write_info_log("starting router server,please waiting...");
+		//load config
+		if(NULL == p_router_server_config)
+		{
+			p_router_server_config = (router_server_config*)moon_malloc(sizeof(router_server_config));
+		}
+		if(!load_config(p_router_server_config))
+		{
+			moon_write_error_log("load config error,server has exit.");
+			return;
+		}
+		b_config_load_finish = true;
 
+		//启动数据交换服务，连接注册中心
+
+		//启动通信服务
+		
+
+		//等待用户输入命令
+		process_command();
 	}
 
 	/**
@@ -26,6 +55,15 @@ extern "C" {
 	 */
 	void router_stop()
 	{
+		
+#ifdef MS_WINDOWS
+		ms_iocp_server_stop();
+#endif
+		//close log
+		moon_log_close();
+
+		//释放初始化的内存
+		moon_free(p_router_server_config);
 
 	}
 

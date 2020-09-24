@@ -65,13 +65,21 @@
     <ClCompile Include="collection\link_list.c" />
     <ClCompile Include="collection\map.c" />
     <ClCompile Include="collection\queue.c" />
+    <ClCompile Include="core\moon_session_manager.c" />
+    <ClCompile Include="core\ms_nt__iocp.c" />
+    <ClCompile Include="core\ms_socket_context.c" />
     <ClCompile Include="core\router_link.c" />
     <ClCompile Include="core\server.c" />
+    <ClCompile Include="module\command.c" />
+    <ClCompile Include="module\module_cfg.c" />
     <ClCompile Include="module\module_log.c" />
     <ClCompile Include="module\moon_base.c" />
+    <ClCompile Include="module\moon_data_cache.c" />
+    <ClCompile Include="module\moon_file.c" />
     <ClCompile Include="module\moon_http_client.c" />
     <ClCompile Include="module\moon_memory_pool.c" />
     <ClCompile Include="module\moon_string.c" />
+    <ClCompile Include="module\moon_time.c" />
     <ClCompile Include="router.c" />
   </ItemGroup>
   <ItemGroup>
@@ -81,13 +89,24 @@
     <ClInclude Include="collection\link_list.h" />
     <ClInclude Include="collection\map.h" />
     <ClInclude Include="collection\queue.h" />
+    <ClInclude Include="core\data_exchange.h" />
+    <ClInclude Include="core\moon_session.h" />
+    <ClInclude Include="core\moon_session_manager.h" />
+    <ClInclude Include="core\ms_nt__iocp.h" />
+    <ClInclude Include="core\ms_socket_context.h" />
     <ClInclude Include="core\router_link.h" />
     <ClInclude Include="core\server.h" />
+    <ClInclude Include="module\command.h" />
+    <ClInclude Include="module\module_cfg.h" />
     <ClInclude Include="module\module_log.h" />
     <ClInclude Include="module\moon_base.h" />
+    <ClInclude Include="module\moon_data_cache.h" />
+    <ClInclude Include="module\moon_file.h" />
     <ClInclude Include="module\moon_http_client.h" />
     <ClInclude Include="module\moon_memory_pool.h" />
     <ClInclude Include="module\moon_string.h" />
+    <ClInclude Include="module\moon_time.h" />
+    <ClInclude Include="msg\moon_protocol.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

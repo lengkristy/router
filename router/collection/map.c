@@ -139,6 +139,56 @@ extern "C" {
 
 	/**
 	 * 函数说明：
+	 *    删除元素
+	 * 参数：
+	 *    p_map：map指针
+	 *    p_key：key
+	 */
+	void map_remove(map *p_map,char *p_key)
+	{
+		map_item *p_map_item = NULL;
+		map_node* p_map_node = NULL;
+		map_node* p_pre_node = NULL;//前一个节点
+		int index = 0;
+		if (p_map == NULL || p_key == NULL)
+		{
+			return;
+		}
+		//index = (int)p_key;
+		index = map_hash_code(p_key);
+		//计算索引
+		index = index % p_map->node_size;
+		p_map_node = &(p_map->p_nodes[index]);
+		//判断删除的节点是不是开始节点
+		if (strcmp(p_map_node->p_cur_item->p_key,p_key) == 0)
+		{
+			//直接将当前节点置空，不能直接释放资源，因为开始节点为预分配数组
+			p_map_node->p_cur_item->p_key = NULL;
+			p_map_node->p_cur_item->p_val = NULL;
+			p_map->length--;
+			return;
+		}
+		//表示该元素在链表上
+		p_pre_node = p_map_node;
+		p_map_node = p_map_node->p_next_item;
+		while(p_map_node != NULL && p_map_node->p_cur_item != NULL){
+			if (strcmp(p_map_node->p_cur_item->p_key,p_key) == 0)
+			{
+				//释放资源
+				p_pre_node->p_next_item = p_map_node->p_next_item;
+				free(p_map_node->p_cur_item);
+				free(p_map_node);
+				p_map->length--;
+				return;
+			}
+			//继续查找
+			p_pre_node = p_map_node;
+			p_map_node = p_map_node->p_next_item;
+		}
+	}
+
+	/**
+	 * 函数说明：
 	 *   获取所有的key列表
 	 * 参数：
 	 *   p_map：map指针
@@ -220,13 +270,13 @@ extern "C" {
 		start = clock();
 
 		//存储100万个元素
-		for (index = 0; index < 1000000;index++)
+		for (index = 0; index < 10000;index++)
 		{
 			key = (char*)malloc(100);
 			val = (char*)malloc(100);
 			sprintf(key,"key%d",index);
 			sprintf(val,"val%d",index);
-			if (index == 234232)
+			if (index == 1232)
 			{
 				find_key = key;
 			}
@@ -247,6 +297,9 @@ extern "C" {
 		finish = clock();
 		total_time = (double)(finish - start);
 		printf("\n遍历key所需时间：%0.3f毫秒 \n", total_time);
+
+		//删除某个元素
+		map_remove(p_map,"key1212");
 
 		//释放资源
 		for (index = 0; index < p_list->length;index++)
