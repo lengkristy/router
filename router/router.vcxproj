@@ -70,7 +70,8 @@
     <ClCompile Include="core\ms_socket_context.c" />
     <ClCompile Include="core\router_link.c" />
     <ClCompile Include="core\server.c" />
-    <ClCompile Include="module\command.c" />
+    <ClCompile Include="module\cJSON.c" />
+    <ClCompile Include="module\module_command.c" />
     <ClCompile Include="module\module_cfg.c" />
     <ClCompile Include="module\module_log.c" />
     <ClCompile Include="module\moon_base.c" />
@@ -80,6 +81,7 @@
     <ClCompile Include="module\moon_memory_pool.c" />
     <ClCompile Include="module\moon_string.c" />
     <ClCompile Include="module\moon_time.c" />
+    <ClCompile Include="msg\moon_msg.c" />
     <ClCompile Include="router.c" />
   </ItemGroup>
   <ItemGroup>
@@ -96,7 +98,8 @@
     <ClInclude Include="core\ms_socket_context.h" />
     <ClInclude Include="core\router_link.h" />
     <ClInclude Include="core\server.h" />
-    <ClInclude Include="module\command.h" />
+    <ClInclude Include="module\cJSON.h" />
+    <ClInclude Include="module\module_command.h" />
     <ClInclude Include="module\module_cfg.h" />
     <ClInclude Include="module\module_log.h" />
     <ClInclude Include="module\moon_base.h" />
@@ -106,6 +109,7 @@
     <ClInclude Include="module\moon_memory_pool.h" />
     <ClInclude Include="module\moon_string.h" />
     <ClInclude Include="module\moon_time.h" />
+    <ClInclude Include="msg\moon_msg.h" />
     <ClInclude Include="msg\moon_protocol.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

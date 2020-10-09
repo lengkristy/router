@@ -25,7 +25,7 @@ extern "C" {
  * return:
  *      success return true,failed return false 
  */
-bool ms_iocp_server_start();
+bool ms_iocp_server_start(const router_server_config* p_router_server_config);
 
 /**
  * function desc:

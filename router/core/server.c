@@ -1,7 +1,13 @@
 #include "server.h"
 #include "../cfg/environment.h"
+#include "../module/module_cfg.h"
 #include "../module/module_log.h"
-#include "../module/command.h"
+#include "../module/moon_memory_pool.h"
+#include "../module/module_command.h"
+
+#ifdef MS_WINDOWS
+#include "../core/ms_nt__iocp.h"
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -36,6 +42,7 @@ extern "C" {
 		if(!load_config(p_router_server_config))
 		{
 			moon_write_error_log("load config error,server has exit.");
+			router_stop();
 			return;
 		}
 		b_config_load_finish = true;
@@ -43,7 +50,15 @@ extern "C" {
 		//启动数据交换服务，连接注册中心
 
 		//启动通信服务
+#ifdef MS_WINDOWS
+		if (!ms_iocp_server_start(p_router_server_config))
+		{
+			moon_write_error_log("lauch iocp service failed,server exit...");
+			router_stop();
+			return;
+		}
 		
+#endif
 
 		//等待用户输入命令
 		process_command();

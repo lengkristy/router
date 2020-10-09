@@ -8,6 +8,7 @@
 #include "../collection/queue.h"
 #include "moon_session.h"
 #include "../module/moon_time.h"
+#include "../msg/moon_msg.h"
 
 #ifdef MS_WINDOWS
 #include <wchar.h>
@@ -165,11 +166,11 @@ extern "C" {
 			sizeof(SOCKADDR_IN)+16, sizeof(SOCKADDR_IN)+16, &dwBytes, p_ol))  
 		{  
 			if(WSA_IO_PENDING != WSAGetLastError())  
-			{  
+			{
 				sprintf(strMsg,"post accept request failed,error code:%d",WSAGetLastError());
 				moon_write_error_log(strMsg);
 				return false;
-			}  
+			}
 		}
 		return true;
 	}
@@ -179,7 +180,110 @@ extern "C" {
 	//
 	bool doAccpet(PMS_IO_CONTEXT pIoContext,PMS_SOCKET_CONTEXT pSocketContext)
 	{
+		SOCKADDR_IN* client_addr = NULL;
+		SOCKADDR_IN* local_addr = NULL;
+		PMS_SOCKET_CONTEXT p_new_socket_context = NULL;
+		PMS_IO_CONTEXT p_new_io_context = NULL;
+		moon_session* p_moon_session = NULL;
+		char current_datetime[40] = {0};//当前连接时间
+		int len = 0;
+		client_environment* p_client_env = NULL;
+		moon_char busines_msg[PKG_BYTE_MAX_LENGTH] = {0};//业务消息
+		int remoteLen = sizeof(SOCKADDR_IN), localLen = sizeof(SOCKADDR_IN);
+
+		//判断客户端id是否存在，如果存在，那么不需要accept
+		if(!moon_string_is_empty(pSocketContext->m_client_id))
+		{
+			return post_accept( pIoContext );
+		}
+
+		//判断连接是否超过了服务允许的最大值
+		moon_write_debug_log("new connect is comming");
+
+		g_lpfnGetAcceptExSockAddrs(pIoContext->m_wsaBuf.buf, pIoContext->m_wsaBuf.len - ((sizeof(SOCKADDR_IN)+16)*2),  
+			sizeof(SOCKADDR_IN)+16, sizeof(SOCKADDR_IN)+16, (LPSOCKADDR*)&local_addr, &localLen, (LPSOCKADDR*)&client_addr, &remoteLen);
+
+		//parse data packge,the first data must complete,otherwise close socket，网络上传输的数据编码为utf-8
+		if(!pkg_is_head((moon_char*)pIoContext->m_szBuffer))
+		{
+			//close client socket
+			closesocket(pIoContext->m_sockAccept);
+			return post_accept( pIoContext );
+		}
+
+		//parse packge data
+		len = parse_pkg((moon_char*)pIoContext->m_szBuffer,busines_msg);
+
+		if(len == 0)
+		{
+			//close client socket
+			closesocket(pIoContext->m_sockAccept);
+			return post_accept( pIoContext );
+		}
+
+		p_client_env = (client_environment*)moon_malloc(sizeof(client_environment));
+		if(p_client_env == NULL)
+		{
+			//close client socket
+			closesocket(pIoContext->m_sockAccept);
+			return post_accept( pIoContext );
+		}
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////////
+		// 2.So, notice here, this is the Context in the listening socket, and this Context we also need to use to listen for the next connection.
+		// I have to copy the Context on the listening Socket to create a new SocketContext for the new Socket.
+
+		p_new_socket_context = create_new_socket_context();
+		p_new_socket_context->m_socket = pIoContext->m_sockAccept;
+		memcpy(&(p_new_socket_context->m_client_addr), client_addr, sizeof(SOCKADDR_IN));
+
+		moon_char_copy(p_new_socket_context->m_client_id, p_client_env->client_id);
+
+		// After the parameters are set, the Socket is bound to the completion port.
+		if( false==associateWithIOCP( p_new_socket_context ) )
+		{
+			moon_free(p_new_socket_context);
+			return post_accept( pIoContext );
+		}
+
+		///////////////////////////////////////////////////////////////////////////////////////////////////
+		// 3. The IoContext is established to deliver the first Recv data request on this Socket.
+		p_new_io_context = create_new_io_context();
+		p_new_io_context->m_OpType = RECV_POSTED;
+		p_new_io_context->m_sockAccept  = p_new_socket_context->m_socket;
+
+		// Once the binding is complete, you can begin to deliver the completed request on this Socket.
+		if( false==postRecv( p_new_io_context) )
+		{
+			array_list_remove(p_new_socket_context->m_pListIOContext,p_new_io_context);
+			free_io_context(p_new_io_context);
+			free_socket_context(p_new_socket_context);
+			return post_accept(pIoContext);
+		}
+		array_list_insert(p_new_socket_context->m_pListIOContext,p_new_io_context,-1);
+
+		p_new_io_context = create_new_io_context();
+		p_new_io_context->m_OpType       = SEND_POSTED;
+		p_new_io_context->m_sockAccept   = p_new_socket_context->m_socket;
+		array_list_insert(p_new_socket_context->m_pListIOContext,p_new_io_context,-1);
+
+		/////////////////////////////////////////////////////////////////////////////////////////////////
+		// 4. If the delivery is successful, then add this valid client information to the ContextList
+		//    (which requires unified management and easy release of resources)
+		p_moon_session = (moon_session*)moon_malloc(sizeof(moon_session));
+		memset(p_moon_session,0,sizeof(moon_session));
+		p_moon_session->p_client_environment = p_client_env;
+		p_moon_session->p_socket_context = p_new_socket_context;
+		moon_current_time(current_datetime);
+		char_to_moon_char(current_datetime,p_moon_session->conn_datetime);
+		add_session(p_moon_session);
+
+		////////////////////////////////////////////////////////////////////////////////////////////////
+		// 5. After use, reset the IoContext of the Listen Socket, and then prepare to deliver the new AcceptEx.
+		memset(pIoContext->m_szBuffer,0,PKG_BYTE_MAX_LENGTH);
 		
+		//发送一个服务端同意接受客户端的消息
+
 		return post_accept( pIoContext );
 	}
 
@@ -480,7 +584,7 @@ extern "C" {
 		}
 		else
 		{
-			sprintf(strMsg,"listen socket binding success");
+			sprintf(strMsg,"bind listen socket to io completion port success");
 			moon_write_info_log(strMsg);
 			memset(strMsg,0,256);
 		}
@@ -672,6 +776,7 @@ extern "C" {
 		_LeaveCriticalSection(psocket_context);
 		return size;
 	}
+
 #ifdef __cplusplus
 }
 #endif

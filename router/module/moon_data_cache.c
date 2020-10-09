@@ -1,4 +1,5 @@
 #include "moon_data_cache.h"
+#include "../module/moon_memory_pool.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -69,7 +70,7 @@ extern "C" {
 		if (p_node != NULL)
 		{
 			moon_free(p_node);
-			map_remove(p_router_nodes_map,p_router_node);
+			map_remove(p_router_nodes_map,p_router_node->node_id);
 		}
 		//È»ºó²åÈë
 		map_put(p_router_nodes_map,p_router_node->node_id,p_router_node);
@@ -113,5 +114,5 @@ extern "C" {
 
 
 #ifdef __cplusplus
-extern "C" {
+}
 #endif

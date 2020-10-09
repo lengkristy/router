@@ -1,4 +1,4 @@
-#include "command.h"
+#include "module_command.h"
 #include "../cfg/environment.h"
 
 
@@ -24,6 +24,10 @@ extern "C" {
 			router_stop();
 			exit(0);
 			return;
+		}
+		else
+		{
+			printf("invalid command\n\r");
 		}
 	}
 
